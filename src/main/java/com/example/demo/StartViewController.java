@@ -2,13 +2,23 @@ package com.example.demo;
 
 import com.example.demo.models.Tour;
 import com.example.demo.services.TourService;
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 public class StartViewController {
     TourService tourService = new TourService();
@@ -16,24 +26,36 @@ public class StartViewController {
     @FXML
     ListView<Tour> toursListView;
 
-    @FXML
-    Button createTourButton;
-
     public void initialize() {
         ObservableList<Tour> tours = tourService.getTours();
         //ObservableList<String> tourNames = FXCollections.observableArrayList(tours.stream().map(tour -> tour.getName()).toList());
         toursListView.setItems(tours);
-
-        toursListView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) {
-                System.out.println("Selected: " + newVal);
-            }
-        });
-
-
     }
 
-    public void onCreateTourButtonClicked(){
-         tourService.createTour();
+    public void onCreateTourButtonClicked() {
+        tourService.createTour();
     }
+
+    public void onDeleteTourButtonClicked() {
+        Tour selectedTour = toursListView.getSelectionModel().selectedItemProperty().get();
+        tourService.deleteTour(selectedTour);
+    }
+
+    public void onEditTourButtonClicked() throws IOException {
+        Tour selectedTour = toursListView.getSelectionModel().selectedItemProperty().get();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("upsert-tour-modal-view.fxml"));
+        Parent root = loader.load();
+        UpsertTourModalController controller = loader.getController();
+        controller.setTour(selectedTour);
+        controller.setTourService(tourService);
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+    public void onRefreshListClicked(){
+        toursListView.refresh();
+    }
+
 }

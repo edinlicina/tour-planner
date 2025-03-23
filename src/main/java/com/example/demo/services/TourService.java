@@ -4,8 +4,12 @@ import com.example.demo.models.Tour;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class TourService {
     ObservableList<Tour> tours = FXCollections.observableArrayList(new Tour(
+            0,
             "Testtour",
             "Eine Testtour",
             "Wien",
@@ -18,6 +22,7 @@ public class TourService {
 
     public void createTour(){
         Tour newTour = new Tour(
+                tours.size(),
                 "Testtour2",
                 "Eine Testtour2",
                 "Wien",
@@ -28,15 +33,18 @@ public class TourService {
         );
         tours.add(newTour);
     }
-    public void editTour(){
 
+    public void editTour(int id, String newName){
+      List<Tour> filteredTour =   tours.stream().filter(tour -> tour.getId() == id).toList();
+      int index = tours.indexOf(filteredTour.getFirst());
+      Tour tourToUpdate = tours.get(index);
+      tourToUpdate.setName(newName);
     }
-    public void deleteTour(){
 
+    public void deleteTour(Tour tour){
+        tours.remove(tour);
     }
-    public void updateTour(){
 
-    }
     public ObservableList<Tour> getTours(){
         return tours;
     }
