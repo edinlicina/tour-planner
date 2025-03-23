@@ -61,5 +61,20 @@ public class StartViewController {
     public void onRefreshListClicked(){
         toursListView.refresh();
     }
+    public void onShowDetailsButtonClicked() throws IOException {
+        Tour selectedTour = toursListView.getSelectionModel().getSelectedItem();
+        if (selectedTour == null) return;
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("tour-details-view.fxml"));
+        Parent root = loader.load();
+        TourDetailsController controller = loader.getController();
+        controller.setTour(selectedTour);
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Tour Details");
+        stage.show();
+    }
+
 
 }

@@ -13,5 +13,7 @@
     <Button onMouseClicked="#onDeleteTourButtonClicked">Delete Tour</Button>
     <Button onMouseClicked="#onEditTourButtonClicked">Edit Tour</Button>
     <Button onMouseClicked="#onRefreshListClicked">Refresh List</Button>
+    <Button onMouseClicked="#onShowDetailsButtonClicked" text="Show Details"/>
+
     <ListView fx:id="toursListView" prefHeight="200.0" prefWidth="300.0"/>
 </VBox>

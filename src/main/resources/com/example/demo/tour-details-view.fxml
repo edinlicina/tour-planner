@@ -1,0 +1,21 @@
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.demo.TourDetailsController"
+      spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 20;">
+
+    <Label text="Tour Details"/>
+
+    <Label fx:id="nameLabel"/>
+    <Label fx:id="descriptionLabel"/>
+    <Label fx:id="fromLabel"/>
+    <Label fx:id="toLabel"/>
+    <Label fx:id="transportLabel"/>
+    <Label fx:id="distanceLabel"/>
+    <Label fx:id="timeLabel"/>
+
+    <ImageView fx:id="routeImageView" fitWidth="400" fitHeight="200"/>
+</VBox>
+
