@@ -32,17 +32,11 @@ public class StartViewController {
         toursListView.setItems(tours);
     }
 
-    public void onCreateTourButtonClicked() {
-        tourService.createTour();
+    public void onCreateTourButtonClicked() throws IOException {
+        openUpsertModal(null);
     }
 
-    public void onDeleteTourButtonClicked() {
-        Tour selectedTour = toursListView.getSelectionModel().selectedItemProperty().get();
-        tourService.deleteTour(selectedTour);
-    }
-
-    public void onEditTourButtonClicked() throws IOException {
-        Tour selectedTour = toursListView.getSelectionModel().selectedItemProperty().get();
+    private void openUpsertModal(Tour selectedTour) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("upsert-tour-modal-view.fxml"));
         Parent root = loader.load();
         UpsertTourModalController controller = loader.getController();
@@ -52,6 +46,16 @@ public class StartViewController {
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.show();
+    }
+
+    public void onDeleteTourButtonClicked() {
+        Tour selectedTour = toursListView.getSelectionModel().selectedItemProperty().get();
+        tourService.deleteTour(selectedTour);
+    }
+
+    public void onEditTourButtonClicked() throws IOException {
+        Tour selectedTour = toursListView.getSelectionModel().selectedItemProperty().get();
+        openUpsertModal(selectedTour);
     }
 
     public void onRefreshListClicked(){

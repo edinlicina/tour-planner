@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TourService {
+    int idCounter = 1;
     ObservableList<Tour> tours = FXCollections.observableArrayList(new Tour(
             0,
             "Testtour",
@@ -20,10 +21,10 @@ public class TourService {
             )
     );
 
-    public void createTour(){
+    public void createTour(String name){
         Tour newTour = new Tour(
-                tours.size(),
-                "Testtour2",
+                idCounter,
+                name,
                 "Eine Testtour2",
                 "Wien",
                 "Bosnien",
@@ -32,6 +33,7 @@ public class TourService {
                 9
         );
         tours.add(newTour);
+        idCounter++;
     }
 
     public void editTour(int id, String newName){

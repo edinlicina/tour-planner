@@ -7,7 +7,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 
-
 public class UpsertTourModalController {
     private Tour tour;
     private TourService tourService;
@@ -17,18 +16,27 @@ public class UpsertTourModalController {
 
     public void setTour(Tour tour) {
         this.tour = tour;
+        if (tour == null) {
+            return;
+        }
         tourNameTextField.setText(tour.toString());
     }
 
-    public void setTourService(TourService tourService){
+    public void setTourService(TourService tourService) {
         this.tourService = tourService;
     }
 
-    public void initialize(){
+    public void initialize() {
 
     }
-    public void onSaveTourButtonClicked(){
-        tourService.editTour(tour.getId(), tourNameTextField.getText());
+
+    public void onSaveTourButtonClicked() {
+        if (tour == null) {
+            tourService.createTour(tourNameTextField.getText());
+        } else {
+            tourService.editTour(tour.getId(), tourNameTextField.getText());
+        }
+
     }
 
 }
